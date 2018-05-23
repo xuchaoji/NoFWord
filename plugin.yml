@@ -1,0 +1,7 @@
+name: NoFword
+main: com.xuchaoji.craft.nofword.NoFWord
+version: 1.0
+commands:
+    nfw:
+        description: Just in case I need a command
+        usage: /nfw
