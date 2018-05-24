@@ -54,7 +54,10 @@ public class NoFWord extends JavaPlugin implements CommandExecutor, Listener {
 				sender.sendMessage(ChatColor.AQUA+"what's the ban word?");
 			}else {
 				System.out.println("Get ban word: " + args[1]);
-				List<String> l = config.getStringList("BanWord");
+				List<String> l = getConfig().getStringList("BanWord"); //此处用config变量也会出现奇怪的BUG
+				if(l.contains(args[1])) {
+					sender.sendMessage(args[1]+ "already in ban list!");
+				}else {
 				l.add((String)args[1]);
 				System.out.println(args[1]+ " adding to ban list!");
 				getConfig().set("BanWord", l); //此处若使用 config变量，只能生效一次，使用getConfig()方法可重新读取保存后的ban list
@@ -64,6 +67,7 @@ public class NoFWord extends JavaPlugin implements CommandExecutor, Listener {
 				
 				reloadConfig();
 				System.out.println("config file reloaded!");
+			}
 			}
 		//}
 		
