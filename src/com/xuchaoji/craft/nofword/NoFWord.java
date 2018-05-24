@@ -35,6 +35,7 @@ public class NoFWord extends JavaPlugin implements CommandExecutor, Listener {
 		config.options().copyDefaults(true);
 		saveConfig();
 		this.getCommand("nfw").setExecutor(this);
+		getServer().getPluginManager().registerEvents(this, this);
 	}
 	
 	@Override
@@ -44,20 +45,27 @@ public class NoFWord extends JavaPlugin implements CommandExecutor, Listener {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if(sender instanceof Player) {
+		//if(sender instanceof Player) {
 			if(args.length == 0) {
 				sender.sendMessage(ChatColor.DARK_GREEN+"use \"/nfw PASSWOED banWords\" to add a ban word, password is set in config file.");
 			}else if(!args[0].equals(config.getString("PASSWORD"))) {
 				sender.sendMessage(ChatColor.DARK_RED+"Wrong PassWord");
+			}else if(args.length == 1){
+				sender.sendMessage(ChatColor.AQUA+"what's the ban word?");
 			}else {
+				System.out.println("Get ban word: " + args[1]);
 				List<String> l = config.getStringList("BanWord");
-				l.add(args[1]);
-				config.addDefault("BanWord", l);
-				config.options().copyDefaults(true);
+				l.add((String)args[1]);
+				System.out.println(args[1]+ " adding to ban list!");
+				getConfig().set("BanWord", l); //此处若使用 config变量，只能生效一次，使用getConfig()方法可重新读取保存后的ban list
+				System.out.println(args[1]+ " added!");
 				saveConfig();
+				System.out.println("save to config file.");
+				
 				reloadConfig();
+				System.out.println("config file reloaded!");
 			}
-		}
+		//}
 		
 		return true;
 	}
