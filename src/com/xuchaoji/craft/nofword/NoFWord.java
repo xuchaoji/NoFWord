@@ -50,6 +50,9 @@ public class NoFWord extends JavaPlugin implements CommandExecutor, Listener {
 			sender.sendMessage(ChatColor.DARK_RED + "[nfw]Wrong PassWord");
 		} else if (args.length == 1) {
 			sender.sendMessage(ChatColor.AQUA + "[nfw]what's the ban word?");
+		} else if (args[1].equals("reload")) {
+			reloadConfig();
+			sender.sendMessage(ChatColor.DARK_GREEN + "[nfw]config file reloaded!");
 		} else {
 			for (int i = 1; i < args.length; i++) {
 				System.out.println("Get ban word: " + args[i]);
